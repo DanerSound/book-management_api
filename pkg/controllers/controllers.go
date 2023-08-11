@@ -6,8 +6,8 @@ import(
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
-	"github.com/DanerSound/book-management_api/tree/main/pkg/utils"
-	"github.com/DanerSound/book-management_api/tree/main/pkg/models"
+	"github.com/DanerSound/book-management_api/pkg/utils"
+	"github.com/DanerSound/book-management_api/pkg/models"
 )
 
  var NewBoook models.Book
@@ -61,8 +61,8 @@ func DeleteBook(w http.ResponseWriter, r *http.Request){
 }
 
 func UpdateBook(w http.ResponseWriter, r *http.Request){
-	var UpdateBook = &models.Book{}
-	utils.Parse(r, UpdateBook)
+	var updateBook = &models.Book{}
+	utils.ParseBody(r, UpdateBook)
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId,0,0)
@@ -70,8 +70,8 @@ func UpdateBook(w http.ResponseWriter, r *http.Request){
 		fmt.Println(" error while deleting")
 	}
 	bookDetails, db:=models.GetBookById(ID)
-	if UpdateBook.Name !=""{
-		bbookDetails.Name = updateBook.Name
+	if updateBook.Name !=""{
+		bookDetails.Name = updateBook.Name
 	}
 	if updateBook.Author !=""{
 		bookDetails.Author = updateBook.Author
@@ -79,4 +79,10 @@ func UpdateBook(w http.ResponseWriter, r *http.Request){
 	if updateBook.Publication != ""{
 		bookDetails.Publication = updateBook.Publication
 	}
+
+	db.Save(&bookDetails)
+	res, _ :=json.Marshal(bookDetails)
+	w.Header().Set("Content-Type","pkglication/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)	
 }

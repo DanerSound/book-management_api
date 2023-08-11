@@ -2,7 +2,7 @@ package models
 
 import(
 	"github.com/jinzhu/gorm"
-	"github.com/DanerSound/book-management_api/tree/main/pkg/config"
+	"github.com/DanerSound/book-management_api/pkg/config"
 )
 
 var db *gorm.DB

@@ -5,7 +5,7 @@ import(
 	"net/http"
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/DanerSound/book-management_api/tree/main/pkg/routes"
+	"github.com/DanerSound/book-management_api/pkg/routes"
 )
 
 func main(){
